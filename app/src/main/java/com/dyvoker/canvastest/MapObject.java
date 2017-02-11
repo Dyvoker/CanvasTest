@@ -1,19 +1,17 @@
 package com.dyvoker.canvastest;
 
 /**
- * Class for in-game map objects (blocks, trees, etc)
+ * Class for in-game map objects (trees, characters, etc)
  */
 
-public class MapObject {
-    static MapObject BLOCK = new MapObject(R.drawable.block);
-    static MapObject TREE = new MapObject(R.drawable.tree);
-    private int pictureResource; //Picture of the object
+public class MapObject extends DrawableOnMap {
+    static MapObject TREE = new MapObject(R.drawable.tree, 0.2f, -0.2f, 3.0f);
 
-    public MapObject(int pictureResource) {
-        this.pictureResource = pictureResource;
+    private MapObject(int drawableResourceId) {
+        super(drawableResourceId);
     }
 
-    public int getPictureResource() {
-        return pictureResource;
+    private MapObject(int drawableResourceId, float shiftX, float shiftY, float scale) {
+        super(drawableResourceId, shiftX, shiftY, scale);
     }
 }

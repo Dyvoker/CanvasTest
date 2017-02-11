@@ -1,45 +1,43 @@
 package com.dyvoker.canvastest;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Game map with objects
  */
 
 public class Map {
-    private ArrayList<MapObject>[][] map;
+    private MapCell[][] map;
 
     public Map() {
-        ArrayList<MapObject>[][] defaultMap;
+        MapCell[][] defaultMap;
         {
-            defaultMap = new ArrayList[3][4];
+            defaultMap = new MapCell[3][4];
             for (int x = 0; x < defaultMap.length; x++) {
                 for (int y = 0; y < defaultMap[x].length; y++) {
-                    defaultMap[x][y] = new ArrayList<>();
+                    defaultMap[x][y] = new MapCell();
                 }
             }
-            defaultMap[0][0].add(MapObject.BLOCK);
-            defaultMap[0][1].add(MapObject.BLOCK);
-            defaultMap[0][2].add(MapObject.BLOCK);
-            defaultMap[1][1].add(MapObject.BLOCK);
-            defaultMap[1][2].add(MapObject.BLOCK);
-            defaultMap[2][2].add(MapObject.BLOCK);
-            defaultMap[2][3].add(MapObject.BLOCK);
+            defaultMap[0][0].setBlock(MapBlock.SEND);
+            defaultMap[0][2].setBlock(MapBlock.SEND);
+            defaultMap[1][1].setBlock(MapBlock.SEND);
+            defaultMap[1][2].setBlock(MapBlock.SEND);
+            defaultMap[2][2].setBlock(MapBlock.SEND);
+            defaultMap[2][3].setBlock(MapBlock.SEND);
 
-            defaultMap[2][2].add(MapObject.TREE);
+            defaultMap[2][2].setObject(MapObject.TREE);
         }
         map = defaultMap;
     }
 
-    public Map(ArrayList[][] map) {
+    public Map(MapCell[][] map) {
         this.map = map;
     }
 
-    public List<MapObject> getObjectsAtPosition(int x, int y) {
+    public MapCell getObjectsAtPosition(int x, int y) {
         if (x < 0 || y < 0 || x >= getXSize() || y >= getYSize()) {
-            return Collections.emptyList();
+            throw new ArrayIndexOutOfBoundsException("Map array out of bounds!");
+        }
+        if (map[x][y] == null) {
+            throw new RuntimeException("Map object can't be null! Check initialization of Map!");
         }
         return map[x][y];
     }

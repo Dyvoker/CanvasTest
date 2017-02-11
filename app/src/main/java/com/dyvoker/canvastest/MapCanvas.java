@@ -3,14 +3,11 @@ package com.dyvoker.canvastest;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.AttributeSet;
 import android.view.View;
-
-import java.util.List;
 
 /**
  * Canvas for drawing game map
@@ -72,23 +69,19 @@ public class MapCanvas extends View {
 
     private void drawMap(Canvas canvas) {
         if (map == null) return;
-        int width = canvas.getWidth();
-        int height = canvas.getHeight();
-        canvasRect.set(0, 0, width, height);
-
         for (int x = 0; x < map.getXSize(); x++) {
             for (int y = 0; y < map.getYSize(); y++) {
-                List<MapObject> objects = map.getObjectsAtPosition(x, y);
-                for (MapObject object : objects) {
-                    Drawable pic = getResources().getDrawable(object.getPictureResource());
-                    int posX = shiftX + (int) (isometricHelper.getCellPosX(x, y) * scale);
-                    int posY = shiftY + (int) (isometricHelper.getCellPosY(x, y) * scale);
-                    int halfBlock = (int) (HALF_BLOCK * scale);
-                    canvasRect.set(posX - halfBlock, posY - halfBlock, posX + halfBlock, posY + halfBlock);
-                    pic.setBounds(canvasRect);
-                    pic.draw(canvas);
+                MapCell cell = map.getObjectsAtPosition(x, y);
+                MapBlock block = cell.getBlock();
+                if (block != null) {
+                    block.draw(getContext(), canvas, x, y, shiftX, shiftY, scale);
+                    MapObject object = cell.getObject();
+                    if (object != null) {
+                        object.draw(getContext(), canvas, x, y, shiftX, shiftY, scale);
+                    }
                 }
             }
         }
     }
+
 }
