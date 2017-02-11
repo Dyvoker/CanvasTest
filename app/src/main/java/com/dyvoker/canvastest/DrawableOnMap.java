@@ -2,7 +2,8 @@ package com.dyvoker.canvastest;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Rect;
+import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 
 /**
@@ -10,43 +11,37 @@ import android.graphics.drawable.Drawable;
  */
 
 public class DrawableOnMap {
-    private static int BLOCK_SIZE = 200;
-    private static int HALF_BLOCK = BLOCK_SIZE / 2;
-    private static IsometricMapHelper ISOMETRIC_HELPER = new IsometricMapHelper(BLOCK_SIZE);
-    private static Rect canvasRect = new Rect(0, 0, 0, 0);
-
-    private int drawableResourceId; //Can't create drawable without context
-    private Drawable drawable; //Picture resource id of the object
-    private float shiftX;
-    private float shiftY;
+    private int drawableResourceId; //Picture resource id of the object
+    private Drawable drawable;
+    private PointF offset; //Offset for drawable in cell
     private float scale;
 
     public DrawableOnMap(int drawableResourceId) {
-        this(drawableResourceId, 0.0f, 0.0f);
+        this(drawableResourceId, new PointF(0.0f, 0.0f));
     }
 
-    public DrawableOnMap(int drawableResourceId, float shiftX, float shiftY) {
-        this(drawableResourceId, shiftX, shiftY, 1.0f);
+    public DrawableOnMap(int drawableResourceId, PointF offset) {
+        this(drawableResourceId, offset, 1.0f);
     }
 
-    public DrawableOnMap(int drawableResourceId, float shiftX, float shiftY, float scale) {
+    public DrawableOnMap(int drawableResourceId, PointF offset, float scale) {
         this.drawableResourceId = drawableResourceId;
-        this.shiftX = shiftX;
-        this.shiftY = shiftY;
+        this.offset = offset;
         this.scale = scale;
     }
 
-    public void draw(Context context, Canvas canvas, int x, int y, int shiftXMap, int shiftYMap, float scaleMap) {
-        canvasRect.set(
-                shiftXMap + (int) ((ISOMETRIC_HELPER.getCellPosX(x, y) + BLOCK_SIZE * shiftX - HALF_BLOCK * scale) * scaleMap),
-                shiftYMap + (int) ((ISOMETRIC_HELPER.getCellPosY(x, y) + BLOCK_SIZE * shiftY - HALF_BLOCK * scale) * scaleMap),
-                shiftXMap + (int) ((ISOMETRIC_HELPER.getCellPosX(x, y) + BLOCK_SIZE * shiftX + HALF_BLOCK * scale) * scaleMap),
-                shiftYMap + (int) ((ISOMETRIC_HELPER.getCellPosY(x, y) + BLOCK_SIZE * shiftY + HALF_BLOCK * scale) * scaleMap));
+    public void draw(Context context, Canvas canvas, Point pos) {
         if (drawable == null) { //Try to load drawable from resource
             drawable = context.getResources().getDrawable(drawableResourceId);
         }
         if (drawable == null) return; //Don't draw if can't load
-        drawable.setBounds(canvasRect);
+        canvas.save();
+        Point cellPosition = IsometricHelper.getCellPosition(pos);
+        canvas.translate(cellPosition.x + IsometricHelper.BLOCK_WIDTH * offset.x,
+                cellPosition.y + IsometricHelper.BLOCK_WIDTH * offset.y);
+        canvas.scale(scale, scale);
+        drawable.setBounds(IsometricHelper.CELL_RECT);
         drawable.draw(canvas);
+        canvas.restore();
     }
 }

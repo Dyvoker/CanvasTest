@@ -7,6 +7,7 @@ package com.dyvoker.canvastest;
 public class MapCell {
     private MapBlock block;
     private MapObject object;
+    private boolean isSelected = false;
 
     public MapCell() {
         this(null);
@@ -26,7 +27,7 @@ public class MapCell {
     }
 
     public void setObject(MapObject object) {
-        if (block != null) { //can set object only on block ;)
+        if (block != null && this.object == null) { //can set object only on block ;)
             this.object = object;
         }
     }
@@ -37,5 +38,13 @@ public class MapCell {
 
     public MapObject getObject() {
         return object;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
     }
 }

@@ -1,17 +1,19 @@
 package com.dyvoker.canvastest;
 
+import android.graphics.PointF;
+
 /**
  * Class for in-game map objects (trees, characters, etc)
  */
 
 public class MapObject extends DrawableOnMap {
-    static MapObject TREE = new MapObject(R.drawable.tree, 0.147f, -0.8f, 2.0f);
+    static MapObject TREE = new MapObject(R.drawable.tree, new PointF( 0.147f, -0.8f), 2.0f);
 
     private MapObject(int drawableResourceId) {
         super(drawableResourceId);
     }
 
-    private MapObject(int drawableResourceId, float shiftX, float shiftY, float scale) {
-        super(drawableResourceId, shiftX, shiftY, scale);
+    private MapObject(int drawableResourceId, PointF offset, float scale) {
+        super(drawableResourceId, offset, scale);
     }
 }
