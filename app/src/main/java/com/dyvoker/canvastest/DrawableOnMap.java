@@ -38,10 +38,10 @@ public class DrawableOnMap {
 
     public void draw(Context context, Canvas canvas, int x, int y, int shiftXMap, int shiftYMap, float scaleMap) {
         canvasRect.set(
-                shiftXMap + (int) ((ISOMETRIC_HELPER.getCellPosX(x, y) - HALF_BLOCK) * scaleMap),
-                shiftYMap + (int) ((ISOMETRIC_HELPER.getCellPosY(x, y) - HALF_BLOCK) * scaleMap),
-                shiftXMap + (int) ((ISOMETRIC_HELPER.getCellPosX(x, y) + HALF_BLOCK) * scaleMap),
-                shiftYMap + (int) ((ISOMETRIC_HELPER.getCellPosY(x, y) + HALF_BLOCK) * scaleMap));
+                shiftXMap + (int) ((ISOMETRIC_HELPER.getCellPosX(x, y) + BLOCK_SIZE * shiftX - HALF_BLOCK * scale) * scaleMap),
+                shiftYMap + (int) ((ISOMETRIC_HELPER.getCellPosY(x, y) + BLOCK_SIZE * shiftY - HALF_BLOCK * scale) * scaleMap),
+                shiftXMap + (int) ((ISOMETRIC_HELPER.getCellPosX(x, y) + BLOCK_SIZE * shiftX + HALF_BLOCK * scale) * scaleMap),
+                shiftYMap + (int) ((ISOMETRIC_HELPER.getCellPosY(x, y) + BLOCK_SIZE * shiftY + HALF_BLOCK * scale) * scaleMap));
         if (drawable == null) { //Try to load drawable from resource
             drawable = context.getResources().getDrawable(drawableResourceId);
         }

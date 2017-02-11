@@ -5,7 +5,7 @@ package com.dyvoker.canvastest;
  */
 
 public class MapObject extends DrawableOnMap {
-    static MapObject TREE = new MapObject(R.drawable.tree, 0.2f, -0.2f, 3.0f);
+    static MapObject TREE = new MapObject(R.drawable.tree, 0.147f, -0.8f, 2.0f);
 
     private MapObject(int drawableResourceId) {
         super(drawableResourceId);
