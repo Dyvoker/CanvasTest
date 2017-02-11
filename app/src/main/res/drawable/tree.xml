@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="256dp"
+    android:height="256dp"
+    android:viewportWidth="256"
+    android:viewportHeight="256">
+
+    <path
+        android:fillColor="#D24824"
+        android:pathData="M 107 112 L 78 86 L 104 120 Z" />
+    <path
+        android:fillColor="#D24824"
+        android:pathData="M 86 159 L 64 116 L 94 141 Z" />
+    <path
+        android:fillColor="#F25D1C"
+        android:pathData="M 109 249 L 67 227 L 77 177 L 115 86 L 130 90 L 126 161 L 130 203 L 144 227 Z" />
+    <path
+        android:fillColor="#D24824"
+        android:pathData="M 114 155 L 159 121 L 118 180 Z" />
+    <path
+        android:fillColor="#FBBD64"
+        android:pathData="M 104 57 L 102 76 L 114 92 L 136 95 L 155 84 L 160 63 L 152 46 L 136 38 L 115 42 Z" />
+    <path
+        android:fillColor="#D24824"
+        android:pathData="M 138 78 L 160 82 L 181 76 L 187 65 L 165 73 L 142 70 Z" />
+    <path
+        android:fillColor="#D24824"
+        android:pathData="M 109 51 L 88 37 L 104 57 Z" />
+    <path
+        android:fillColor="#D24824"
+        android:pathData="M 126 40 L 126 18 L 131 39 Z" />
+    <path
+        android:fillColor="#6CAE9F"
+        android:pathData="M 147 113 L 144 122 L 151 133 L 166 135 L 174 124 L 173 114 L 163 106 L 153 107 Z" />
+    <path
+        android:fillColor="#A5D2B9"
+        android:pathData="M 177 60 L 174 69 L 180 76 L 190 78 L 200 72 L 199 62 L 190 54 L 181 55 Z" />
+    <path
+        android:fillColor="#A094AE"
+        android:pathData="M 86 83 L 80 77 L 71 79 L 70 88 L 76 95 L 85 93 Z" />
+    <path
+        android:fillColor="#FADD60"
+        android:pathData="M 64 106 L 56 116 L 57 125 L 65 133 L 77 129 L 82 118 L 82 117 L 74 105 Z" />
+    <path
+        android:fillColor="#70B471"
+        android:pathData="M 76 25 L 73 36 L 74 47 L 83 52 L 97 49 L 105 36 L 98 26 L 86 21 Z" />
+    <path
+        android:fillColor="#AEB1CF"
+        android:pathData="M 132 16 L 126 12 L 119 15 L 118 24 L 128 28 L 134 22 Z" />
+</vector>
