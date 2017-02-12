@@ -5,7 +5,7 @@ package com.dyvoker.canvastest;
  */
 
 public class MapBlock extends DrawableOnMap {
-    static MapBlock SEND = new MapBlock(R.drawable.block);
+    public static final MapBlock SEND = new MapBlock(R.drawable.block);
 
     private MapBlock(int drawableResourceId) {
         super(drawableResourceId);

@@ -12,7 +12,7 @@ public class MapController {
         this.map = map;
     }
 
-    public void onMapClick(int x, int y) {
+    public void onMapCellClick(int x, int y) {
         if (selectedCell != null) { //Moving selected object
             MapCell currentCell = map.getObjectsAtPosition(x, y);
             currentCell.setObject(selectedCell.getObject());

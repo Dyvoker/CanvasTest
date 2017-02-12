@@ -8,9 +8,9 @@ import android.graphics.Rect;
  */
 
 public final class IsometricHelper {
-    public static int BLOCK_WIDTH = 200;
-    public static int BLOCK_HEIGHT = (int) (BLOCK_WIDTH * (Math.sin(Math.toRadians(15.0f))));
-    private static int HALF_BLOCK_WIDTH = BLOCK_WIDTH / 2;
+    public static final int BLOCK_WIDTH = 200;
+    public static final int BLOCK_HEIGHT = (int) (BLOCK_WIDTH * (Math.sin(Math.toRadians(15.0f))));
+    private static final int HALF_BLOCK_WIDTH = BLOCK_WIDTH / 2;
 
     public static Rect CELL_RECT = new Rect(-HALF_BLOCK_WIDTH, -HALF_BLOCK_WIDTH, HALF_BLOCK_WIDTH, HALF_BLOCK_WIDTH);
 

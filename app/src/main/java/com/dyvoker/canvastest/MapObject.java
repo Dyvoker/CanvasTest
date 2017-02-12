@@ -7,7 +7,7 @@ import android.graphics.PointF;
  */
 
 public class MapObject extends DrawableOnMap {
-    static MapObject TREE = new MapObject(R.drawable.tree, new PointF( 0.147f, -0.8f), 2.0f);
+    public static final MapObject TREE = new MapObject(R.drawable.tree, new PointF( 0.147f, -0.8f), 2.0f);
 
     private MapObject(int drawableResourceId) {
         super(drawableResourceId);
