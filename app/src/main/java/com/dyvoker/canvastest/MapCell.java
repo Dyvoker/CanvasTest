@@ -1,5 +1,9 @@
 package com.dyvoker.canvastest;
 
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Point;
+
 /**
  * Class for map cell, it's consist of block and object on it
  */
@@ -7,7 +11,6 @@ package com.dyvoker.canvastest;
 public class MapCell {
     private MapBlock block;
     private MapObject object;
-    private boolean isSelected = false;
 
     public MapCell() {
         this(null);
@@ -26,10 +29,14 @@ public class MapCell {
         this.block = block;
     }
 
-    public void setObject(MapObject object) {
-        if (block != null && this.object == null) { //can set object only on block ;)
-            this.object = object;
+    public boolean setObject(MapObject object) {
+        if (block != null) { //can set object only on block ;)
+            if (this.object == null || object == null) {
+                this.object = object;
+                return true;
+            }
         }
+        return false;
     }
 
     public MapBlock getBlock() {
@@ -40,11 +47,12 @@ public class MapCell {
         return object;
     }
 
-    public void setSelected(boolean selected) {
-        isSelected = selected;
-    }
-
-    public boolean isSelected() {
-        return isSelected;
+    public void draw(Context context, Canvas canvas, Point pos) {
+        if (block != null) {
+            block.draw(context, canvas, pos);
+        }
+        if (object != null) {
+            object.draw(context, canvas, pos);
+        }
     }
 }

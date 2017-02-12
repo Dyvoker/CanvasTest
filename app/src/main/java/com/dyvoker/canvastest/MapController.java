@@ -1,5 +1,7 @@
 package com.dyvoker.canvastest;
 
+import android.graphics.Point;
+
 /**
  * Controller for map
  */
@@ -9,25 +11,30 @@ public class MapController {
     private MapCell selectedCell;
 
     public MapController(Map map) {
-        this.map = map;
+        setMap(map);
     }
 
-    public void onMapCellClick(int x, int y) {
-        if (selectedCell != null) { //Moving selected object
-            MapCell currentCell = map.getObjectsAtPosition(x, y);
-            currentCell.setObject(selectedCell.getObject());
-            if (currentCell.getObject() == selectedCell.getObject()) {
-                //Object successfully moved
-                selectedCell.setSelected(false);
+    public void setMap(Map map) {
+        this.map = map;
+        selectedCell = null;
+    }
+
+    public void onMapCellClick(Point pos) {
+        MapCell clickedCell = map.getObjectsAtPosition(pos.x, pos.y);
+        if (selectedCell != null) { //Try to move selected object
+            if (clickedCell.setObject(selectedCell.getObject())) { //Object successfully moved
                 selectedCell.setObject(null);
                 selectedCell = null;
             }
-        } else { //Select object
-            selectedCell = map.getObjectsAtPosition(x, y);
-            if (selectedCell.getObject() != null) { //Can select only blocks with object
-                selectedCell.setSelected(true);
+        } else { //Try to select object
+            if (clickedCell.getObject() != null) { //Can select only blocks with object
+                selectedCell = clickedCell;
             }
         }
     }
 
+    //TODO: delete test method
+    public MapCell selectedCell() {
+        return selectedCell;
+    }
 }
