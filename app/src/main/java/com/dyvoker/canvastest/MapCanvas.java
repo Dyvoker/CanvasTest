@@ -3,12 +3,10 @@ package com.dyvoker.canvastest;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -31,11 +29,8 @@ public class MapCanvas extends View {
 
     private Map map;
     private MapController mapController;
-    private float scaleFactor = 1.0f; //Scale for map
+    private float scaleFactor = 1.0f; //Scale factor for map
     private PointF scaleFocus = new PointF(0, 0);
-    private PointF offset = new PointF(0.0f, 0.0f);
-
-    Point tapCanvasPosition;
 
     public MapCanvas(Context context) {
         this(context, null, 0);
@@ -55,11 +50,7 @@ public class MapCanvas extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        if (map != null) { //Set map offset to center
-            offset.set(w / 2, h / 2 - IsometricHelper.getCellPosition(new Point(map.getXSize() / 2, map.getYSize() / 2)).y);
-        } else {
-            offset.set(w / 2, h / 2);
-        }
+        scrollToMapCenter();
     }
 
     @Override
@@ -71,31 +62,31 @@ public class MapCanvas extends View {
     public void setMap(Map map) {
         this.map = map;
         mapController.setMap(map);
-        invalidate();
+        scrollToMapCenter();
+    }
+
+    private void scrollToMapCenter() {
+        int x = getWidth() / 2;
+        int y = getHeight() / 2;
+        int yMapCenter = IsometricHelper.getCellPosition(new Point(map.getXSize() / 2, map.getYSize() / 2)).y;
+        if (map != null) {
+            scrollTo(-x, -y + yMapCenter);
+            scaleFocus.set(0, yMapCenter);
+        } else {
+            scrollTo(-x, -y);
+            scaleFocus.set(0, yMapCenter);
+        }
     }
 
     private void drawMap(Canvas canvas) {
         if (map == null) return;
-        canvas.translate(offset.x, offset.y);
         canvas.scale(scaleFactor, scaleFactor, scaleFocus.x, scaleFocus.y);
         for (int x = 0; x < map.getXSize(); x++) {
             for (int y = 0; y < map.getYSize(); y++) {
                 MapCell cell = map.getObjectsAtPosition(x, y);
                 Point pos = new Point(x, y);
-                cell.draw(getContext(), canvas, pos);
-                //TODO: delete test circle
-                if (mapController.selectedCell() == cell) {
-                    canvas.save();
-                    Point cellPosition = IsometricHelper.getCellPosition(pos);
-                    canvas.translate(cellPosition.x, cellPosition.y);
-                    canvas.drawCircle(0, 0, 10.0f, new Paint());
-                    canvas.restore();
-                }
+                cell.draw(getContext(), canvas, pos, mapController.isCellSelected(cell));
             }
-        }
-        if (tapCanvasPosition != null) {
-            canvas.translate(tapCanvasPosition.x, tapCanvasPosition.y);
-            canvas.drawCircle(0, 0, 10.0f, new Paint());
         }
         canvas.restore();
     }
@@ -111,7 +102,7 @@ public class MapCanvas extends View {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
             scaleFactor *= detector.getScaleFactor(); // scaleFactor change since previous event
-            scaleFocus.set(detector.getFocusX(), detector.getFocusY());
+            scaleFocus.set(detector.getFocusX() + getScrollX(), detector.getFocusY() + getScrollY());
             // Don't let the object get too small or too large.
             scaleFactor = Math.max(MINIMUM_SCALE_FACTOR, Math.min(scaleFactor, MAXIMUM_SCALE_FACTOR));
             MapCanvas.this.invalidate();
@@ -120,20 +111,20 @@ public class MapCanvas extends View {
     }
 
     private class MoveListener extends GestureDetector.SimpleOnGestureListener {
+        private Point tapCanvasPosition = new Point(0, 0);
+
         @Override
         public boolean onScroll(MotionEvent event1, MotionEvent event2, float distanceX, float distanceY) {
-            scrollBy((int)distanceX, (int)distanceY);
-            MapCanvas.this.invalidate();
+            scrollBy((int)distanceX, (int)distanceY); //Scroll view and invalidate it
             return true;
         }
 
         @Override
-        public boolean onSingleTapConfirmed(MotionEvent event) {
+        public boolean onSingleTapUp(MotionEvent event) {
             Point pos = new Point(0, 0);
-            Point tapPosition = new Point((int) event.getX(), (int) event.getY());
-            tapCanvasPosition = new Point(
-                    (int) ((tapPosition.x - offset.x + MapCanvas.this.getScrollX()) / scaleFactor),
-                    (int) ((tapPosition.y - offset.y + MapCanvas.this.getScrollY()) / scaleFactor));
+            tapCanvasPosition.set(
+                    (int) ((event.getX() + MapCanvas.this.getScrollX() - scaleFocus.x) / scaleFactor + scaleFocus.x),
+                    (int) ((event.getY() + MapCanvas.this.getScrollY() - scaleFocus.y) / scaleFactor + scaleFocus.y));
             for (int x = 0; x < map.getXSize(); x++) {
                 for (int y = 0; y < map.getYSize(); y++) {
                     pos.set(x, y);
@@ -143,7 +134,7 @@ public class MapCanvas extends View {
                     }
                 }
             }
-            MapCanvas.this.invalidate();
+            invalidate();
             return true;
         }
     }

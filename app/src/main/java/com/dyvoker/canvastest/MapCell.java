@@ -47,9 +47,12 @@ public class MapCell {
         return object;
     }
 
-    public void draw(Context context, Canvas canvas, Point pos) {
+    public void draw(Context context, Canvas canvas, Point pos, boolean isSelected) {
         if (block != null) {
             block.draw(context, canvas, pos);
+        }
+        if (isSelected) {
+//            isSelected = 1;
         }
         if (object != null) {
             object.draw(context, canvas, pos);

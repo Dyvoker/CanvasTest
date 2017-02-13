@@ -33,8 +33,7 @@ public class MapController {
         }
     }
 
-    //TODO: delete test method
-    public MapCell selectedCell() {
-        return selectedCell;
+    public boolean isCellSelected(MapCell cell) {
+        return selectedCell == cell;
     }
 }
