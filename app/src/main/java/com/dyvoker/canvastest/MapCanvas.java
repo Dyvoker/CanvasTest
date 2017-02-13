@@ -70,9 +70,9 @@ public class MapCanvas extends View {
         int x = getWidth() / 2;
         int y = getHeight() / 2;
         if (map != null) {
-            int yMapCenter = IsometricHelper.getCellPosition(new Point(map.getXSize() / 2, map.getYSize() / 2)).y;
-            scrollTo(-x, -y + yMapCenter);
-            scaleFocus.set(0, yMapCenter);
+            Point mapCenter = IsometricHelper.getCellPosition(new Point(map.getXSize() / 2, map.getYSize() / 2));
+            scrollTo(-x + mapCenter.x, -y + mapCenter.y);
+            scaleFocus.set(mapCenter.x, mapCenter.y);
         } else {
             scrollTo(-x, -y);
             scaleFocus.set(0, 0);
