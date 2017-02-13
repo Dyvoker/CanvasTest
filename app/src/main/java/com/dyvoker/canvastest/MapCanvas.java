@@ -83,7 +83,7 @@ public class MapCanvas extends View {
         canvas.scale(scaleFactor, scaleFactor, scaleFocus.x, scaleFocus.y);
         for (int x = 0; x < map.getXSize(); x++) {
             for (int y = 0; y < map.getYSize(); y++) {
-                MapCell cell = map.getObjectsAtPosition(x, y);
+                MapCell cell = map.getCellAtPosition(x, y);
                 Point pos = new Point(x, y);
                 cell.draw(getContext(), canvas, pos, mapController.isCellSelected(cell));
             }

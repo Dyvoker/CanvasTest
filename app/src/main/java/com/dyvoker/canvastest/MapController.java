@@ -20,15 +20,30 @@ public class MapController {
     }
 
     public void onMapCellClick(Point pos) {
-        MapCell clickedCell = map.getObjectsAtPosition(pos.x, pos.y);
-        if (selectedCell != null) { //Try to move selected object
-            if (clickedCell.setObject(selectedCell.getObject())) { //Object successfully moved
+        MapCell clickedCell = map.getCellAtPosition(pos.x, pos.y);
+
+        //Can click cells only with block
+        if (clickedCell.getBlock() == null) {
+            return;
+        }
+
+        //If clicked cell is the same as selected cell, then deselect it
+        if (clickedCell == selectedCell) {
+            selectedCell = null;
+            return;
+        }
+
+        //Select new cell, if clicked cell have object
+        if (clickedCell.getObject() != null) {
+            selectedCell = clickedCell;
+            return;
+        }
+
+        //If selected cell is set and clicked cell don't have object, then try to move object
+        if (selectedCell != null) {
+            if (clickedCell.setObject(selectedCell.getObject())) { //If object successfully moved
                 selectedCell.setObject(null);
                 selectedCell = null;
-            }
-        } else { //Try to select object
-            if (clickedCell.getObject() != null) { //Can select only blocks with object
-                selectedCell = clickedCell;
             }
         }
     }

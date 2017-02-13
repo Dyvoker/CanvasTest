@@ -24,6 +24,7 @@ public class Map {
             defaultMap[2][3].setBlock(MapBlock.SEND);
 
             defaultMap[2][2].setObject(MapObject.TREE);
+            defaultMap[0][2].setObject(MapObject.TREE);
         }
         map = defaultMap;
     }
@@ -32,7 +33,7 @@ public class Map {
         this.map = map;
     }
 
-    public MapCell getObjectsAtPosition(int x, int y) {
+    public MapCell getCellAtPosition(int x, int y) {
         if (x < 0 || y < 0 || x >= getXSize() || y >= getYSize()) {
             throw new ArrayIndexOutOfBoundsException("Map array out of bounds!");
         }
