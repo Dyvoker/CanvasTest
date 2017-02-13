@@ -81,6 +81,7 @@ public class MapCanvas extends View {
 
     private void drawMap(Canvas canvas) {
         if (map == null) return;
+        canvas.save();
         canvas.scale(scaleFactor, scaleFactor, scaleFocus.x, scaleFocus.y);
         for (int x = 0; x < map.getXSize(); x++) {
             for (int y = 0; y < map.getYSize(); y++) {
