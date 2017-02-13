@@ -9,7 +9,40 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="com.dyvoker.canvastest.MainActivity">
+    tools:context="com.dyvoker.canvastest.MainActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0">
+
+        <Button
+            android:text="Set Map 1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonMap1"
+            android:layout_weight="1"
+            style="@style/Widget.AppCompat.Button.Colored"
+            />
+
+        <Button
+            android:text="Set Map 2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonMap2"
+            android:layout_weight="1"
+            style="@style/Widget.AppCompat.Button.Colored"/>
+
+        <Button
+            android:text="Set Map 3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonMap3"
+            android:layout_weight="1"
+            style="@style/Widget.AppCompat.Button.Colored"/>
+    </LinearLayout>
 
     <com.dyvoker.canvastest.MapCanvas
         android:layout_width="match_parent"

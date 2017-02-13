@@ -20,7 +20,7 @@ public class MapController {
     }
 
     public void onMapCellClick(Point pos) {
-        MapCell clickedCell = map.getCellAtPosition(pos.x, pos.y);
+        MapCell clickedCell = map.getCell(pos.x, pos.y);
 
         //Can click cells only with block
         if (clickedCell.getBlock() == null) {

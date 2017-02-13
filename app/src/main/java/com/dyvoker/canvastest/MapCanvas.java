@@ -63,18 +63,19 @@ public class MapCanvas extends View {
         this.map = map;
         mapController.setMap(map);
         scrollToMapCenter();
+        invalidate();
     }
 
     private void scrollToMapCenter() {
         int x = getWidth() / 2;
         int y = getHeight() / 2;
-        int yMapCenter = IsometricHelper.getCellPosition(new Point(map.getXSize() / 2, map.getYSize() / 2)).y;
         if (map != null) {
+            int yMapCenter = IsometricHelper.getCellPosition(new Point(map.getXSize() / 2, map.getYSize() / 2)).y;
             scrollTo(-x, -y + yMapCenter);
             scaleFocus.set(0, yMapCenter);
         } else {
             scrollTo(-x, -y);
-            scaleFocus.set(0, yMapCenter);
+            scaleFocus.set(0, 0);
         }
     }
 
@@ -83,7 +84,7 @@ public class MapCanvas extends View {
         canvas.scale(scaleFactor, scaleFactor, scaleFocus.x, scaleFocus.y);
         for (int x = 0; x < map.getXSize(); x++) {
             for (int y = 0; y < map.getYSize(); y++) {
-                MapCell cell = map.getCellAtPosition(x, y);
+                MapCell cell = map.getCell(x, y);
                 Point pos = new Point(x, y);
                 cell.draw(getContext(), canvas, pos, mapController.isCellSelected(cell));
             }
