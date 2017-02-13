@@ -13,7 +13,7 @@
         android:pathData="M 86 159 L 64 116 L 94 141 Z" />
     <path
         android:fillColor="#F25D1C"
-        android:pathData="M 77 177 L 115 86 L 130 90 L 126 161 L 130 203 L 147 230 L 109 249 L 64 227 Z" />
+        android:pathData="M 84 160 L 115 86 L 130 90 L 126 161 L 130 203 L 147 230 L 109 249 L 70 230 Z" />
     <path
         android:fillColor="#D24824"
         android:pathData="M 114 155 L 159 121 L 118 180 Z" />

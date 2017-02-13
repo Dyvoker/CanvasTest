@@ -52,7 +52,7 @@ public class MapCell {
             block.draw(context, canvas, pos);
         }
         if (isSelected) {
-//            isSelected = 1;
+            MapSelector.SIMPLE_SELECTOR.draw(context, canvas, pos);
         }
         if (object != null) {
             object.draw(context, canvas, pos);
